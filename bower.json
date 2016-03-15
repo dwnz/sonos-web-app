@@ -1,0 +1,21 @@
+{
+  "name": "sonos-web-app",
+  "description": "A (poorly built) Sonos web app",
+  "main": "node.js",
+  "authors": [
+    "Daniel Wylie <daniel@mindscape.co.nz>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/dwnz/sonos-web-app",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "spotify-web-api-js": "^0.18.1"
+  }
+}

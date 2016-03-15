@@ -18,7 +18,7 @@ function handleRequest(request, response) {
 
 		switch (parts[2]) {
 			case 'play':
-				r('http://localhost:5005/Upstairs/spotify/next/' + parts[3], function(error, rr, body) {
+				r('http://localhost:5005/Upstairs/spotify/queue/' + parts[3], function(error, rr, body) {
 					console.log(error, body);
 					response.end("Hello");
 					return;
