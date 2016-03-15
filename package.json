@@ -1,0 +1,22 @@
+{
+  "name": "sonos-web-app",
+  "version": "1.0.0",
+  "description": "A (poorly built) Sonos web app",
+  "main": "node.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dwnz/sonos-web-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dwnz/sonos-web-app/issues"
+  },
+  "homepage": "https://github.com/dwnz/sonos-web-app#readme",
+  "dependencies": {
+    "request": "^2.69.0"
+  }
+}
