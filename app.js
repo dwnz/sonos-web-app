@@ -5,6 +5,7 @@ function SonosApp() {
 	self.searchText = ko.observable();
 	self.artists = ko.observableArray();
 	self.albums = ko.observableArray();
+	self.queue = ko.observableArray();
 
 	self.artist = ko.observable();
 	self.album = ko.observable();
@@ -95,14 +96,38 @@ function SonosApp() {
 			data = JSON.parse(data);
 			var m = new StateModel();
 			var currentTrack = data.currentTrack;
+			console.log(currentTrack);
 			m.load({
 				songName: currentTrack.title,
 				artistName: currentTrack.artist,
-				url: currentTrack.absoluteAlbumArtURI
+				url: currentTrack.absoluteAlbumArtURI,
+				uri: currentTrack.uri
 			});
 			self.state(m);
 		});
-	};
+
+		if (self.state()) {
+			$.get('/api/queue', function(data) {
+				data = JSON.parse(data);
+				self.queue.removeAll();
+
+				var addNow = false;
+				for (var i = 0; i < data.items.length; i++) {
+					var m = new QueueModel();
+
+					if (data.items[i].uri === self.state().uri()) {
+						addNow = true;
+						continue;
+					}
+
+					if (addNow) {
+						m.load(data.items[i]);
+						self.queue.push(m);
+					}
+				}
+			});
+		};
+	}
 }
 
 
@@ -266,10 +291,34 @@ function StateModel() {
 	self.songName = ko.observable();
 	self.artistName = ko.observable();
 	self.url = ko.observable();
+	self.uri = ko.observable();
 
 	self.load = function(data) {
 		self.songName(data.songName);
 		self.artistName(data.artistName);
 		self.url(data.url);
+		self.uri(data.uri);
+	}
+}
+
+function QueueModel() {
+	var self = this;
+
+	self.absoluteAlbumArtURI = ko.observable();
+	self.album = ko.observable();
+	self.artist = ko.observable();
+	self.title = ko.observable();
+	self.uri = ko.observable();
+
+	self.queueTitle = ko.computed(function(){
+		return self.title() + ' - ' + self.artist();
+	});
+
+	self.load = function(data) {
+		self.absoluteAlbumArtURI(data.absoluteAlbumArtURI);
+		self.album(data.album);
+		self.artist(data.artist);
+		self.title(data.title);
+		self.uri(data.uri);
 	}
 }

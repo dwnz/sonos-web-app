@@ -22,6 +22,10 @@
 			.line.selected a {
 				color:white;
 			}
+
+			.strong {
+				font-weight: bold;
+			}
 		</style>
 	</head>
 	<body>
@@ -42,68 +46,79 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-12 text-center">
-						<div class="form-group">
-							<br><br><br>
-							<input data-bind="textInput: searchText, event:{keypress: checkKeys}" class="form-control" placeholder="Search">
+
+				<div class="col-md-6">
+					<div class="well">
+						<h4>Up next</h4>
+
+						<ul class="queue" data-bind="foreach: queue">
+							<li data-bind="text: queueTitle"></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<div class="form-group">
+						<br><br><br>
+						<input data-bind="textInput: searchText, event:{keypress: checkKeys}" class="form-control" placeholder="Search">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div data-bind="foreach: artists">
+						<div class="row line" data-bind="css:{selected: selected}">
+							<div class="col-md-12">
+								<a href="javascript:" data-bind="click: $root.loadAlbums">
+									<div class="row">
+										<div class="col-md-4">
+											<img data-bind="attr:{src:cover}" class="img-responsive">
+										</div>
+										<div class="col-md-8" data-bind="text: name"></div>
+									</div>
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4">
-						<div data-bind="foreach: artists">
-							<div class="row line" data-bind="css:{selected: selected}">
-								<div class="col-md-12">
-									<a href="javascript:" data-bind="click: $root.loadAlbums">
-										<div class="row">
-											<div class="col-md-4">
-												<img data-bind="attr:{src:cover}" class="img-responsive">
-											</div>
-											<div class="col-md-8" data-bind="text: name"></div>
+				<div class="col-md-4" data-bind="with: artist">
+					<div data-bind="foreach: albums">
+						<div class="row line" data-bind="css:{selected: selected}">
+							<div class="col-md-12">
+								<a href="javascript:" data-bind="click: $root.loadSongs">
+									<div class="row">
+										<div class="col-md-4">
+											<img data-bind="attr:{src:cover}" class="img-responsive">
 										</div>
-									</a>
-								</div>
+										<div class="col-md-8" data-bind="text: name"></div>
+									</div>
+								</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4" data-bind="with: artist">
-						<div data-bind="foreach: albums">
-							<div class="row line" data-bind="css:{selected: selected}">
-								<div class="col-md-12">
-									<a href="javascript:" data-bind="click: $root.loadSongs">
-										<div class="row">
-											<div class="col-md-4">
-												<img data-bind="attr:{src:cover}" class="img-responsive">
-											</div>
-											<div class="col-md-8" data-bind="text: name"></div>
-										</div>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4" data-bind="with: album">
-						<div data-bind="foreach: songs">
-							<div class="row line" data-bind="css:{selected: selected}">
-								<div class="col-md-12">
-									<a href="javascript:" data-bind="click: $root.playSong">
-										<div class="row">
-											<div class="col-md-12" data-bind="text: name"></div>
-										</div>
-									</a>
-								</div>
+				</div>
+				<div class="col-md-4" data-bind="with: album">
+					<div data-bind="foreach: songs">
+						<div class="row line" data-bind="css:{selected: selected}">
+							<div class="col-md-12">
+								<a href="javascript:" data-bind="click: $root.playSong">
+									<div class="row">
+										<div class="col-md-12" data-bind="text: name"></div>
+									</div>
+								</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<script src="/bower_components/spotify-web-api-js/src/spotify-web-api.js"></script>
-			<script src="/app.js"></script>
-			<script>
-				var app = new SonosApp();
-				ko.applyBindings(app);
-				app.start();
-			</script>
-		</body>
-	</html>
+		</div>
+		<script src="/bower_components/spotify-web-api-js/src/spotify-web-api.js"></script>
+		<script src="/app.js"></script>
+		<script>
+			var app = new SonosApp();
+			ko.applyBindings(app);
+			app.start();
+		</script>
+	</body>
+</html>

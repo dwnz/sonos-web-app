@@ -30,6 +30,12 @@ function handleRequest(request, response) {
 					return response.end(body);
 				});
 				return;
+
+			case 'queue':
+				r('http://localhost:5005/Upstairs/queue', function(err, resp, body) {
+					return response.end(body);
+				});
+				return;
 			default:
 				response.end("Bad request");
 				return;
